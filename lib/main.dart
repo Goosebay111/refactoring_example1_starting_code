@@ -1,5 +1,5 @@
-// STEP 2 pg. 9
-// After Extract Method (106), rename some variables to make them more descriptive.
+// STEP 3 pg. 10
+// change the name of argument from perf to aPerformance.
 
 import 'package:intl/intl.dart';
 
@@ -29,22 +29,21 @@ String statement(Invoices invoice, Plays plays) {
   var result = 'Statement for ${invoice.customer}\n';
   var formatter = NumberFormat.simpleCurrency().format;
 
-  int amountFor(Performance perf, Play play) {
-    // 1a) change totalAmount to result.
+  int amountFor(Performance aPerformance, Play play) {
     int result = 0;
     switch (play.type) {
       case 'tragedy':
         result = 40000;
-        if (perf.audience > 30) {
-          result += 1000 * (perf.audience - 30);
+        if (aPerformance.audience > 30) {
+          result += 1000 * (aPerformance.audience - 30);
         }
         break;
       case 'comedy':
         result = 30000;
-        if (perf.audience > 20) {
-          result += 10000 + 500 * (perf.audience - 20);
+        if (aPerformance.audience > 20) {
+          result += 10000 + 500 * (aPerformance.audience - 20);
         }
-        result += 300 * perf.audience;
+        result += 300 * aPerformance.audience;
         break;
       default:
         throw 'unknown type: ${play.type}';
