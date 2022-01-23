@@ -26,9 +26,8 @@ String statement(Invoices invoice, Plays plays) {
   var result = 'Statement for ${invoice.customer}\n';
   var formatter = NumberFormat.simpleCurrency().format;
 
-  for (Performance perf in invoice.performances) {
-    final play = plays.plays.firstWhere((play) => play.name == perf.playID);
-    var thisAmount = 0;
+  int amountFor(Performance perf, Play play) {
+    int thisAmount = 0;
     switch (play.type) {
       case 'tragedy':
         thisAmount = 40000;
@@ -46,6 +45,14 @@ String statement(Invoices invoice, Plays plays) {
       default:
         throw 'unknown type: ${play.type}';
     }
+    return thisAmount;
+  }
+
+  for (Performance perf in invoice.performances) {
+    final play = plays.plays.firstWhere((play) => play.name == perf.playID);
+
+    // 2a) This amount method was directly .
+    int thisAmount = amountFor(perf, play);
 
     // add volume credits
     volumeCredits += perf.audience - 30;
