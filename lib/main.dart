@@ -1,17 +1,21 @@
 import 'package:intl/intl.dart';
 
 void main() {
-  Invoices invoices = Invoices(performances: [
+  List<Performance> invoiceList = [
     Performance(playID: 'Hamlet', audience: 55),
     Performance(playID: 'As You Like It', audience: 35),
     Performance(playID: 'Othello', audience: 40),
-  ]);
+  ];
 
-  Plays plays = Plays(plays: [
+  List<Play> playList = [
     Play(name: 'Hamlet', type: 'tragedy'),
     Play(name: 'As You Like It', type: 'comedy'),
     Play(name: 'Othello', type: 'tragedy'),
-  ]);
+  ];
+
+  Invoices invoices = Invoices(performances: invoiceList);
+
+  Plays plays = Plays(plays: playList);
 
   print(statement(invoices, plays));
 }
