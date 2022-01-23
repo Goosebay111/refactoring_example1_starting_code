@@ -1,5 +1,5 @@
-// STEP 5 pg. 11-12
-// Inline Variable (123)
+// STEP 6 pg.
+// CHANGE FUNCTION DECLARATION (124)
 
 import 'package:intl/intl.dart';
 
@@ -58,17 +58,12 @@ String statement(Invoices invoice, Plays plays) {
   }
 
   for (Performance perf in invoice.performances) {
-    // STEP 5
-    // 1A) moved play variable into the thisAmount variable.
-    // final play = playFor(perf);
     int thisAmount = amountFor(perf, playFor(perf));
 
     volumeCredits += perf.audience - 30;
-    // 1b)
-    if ('comedy' == playFor(perf)) {
+    if ('comedy' == playFor(perf).type) {
       volumeCredits += (perf.audience / 5).floor();
     }
-    // 1c)
     result +=
         ' ${playFor(perf).name}: ${formatter(thisAmount / 100)} (${perf.audience} seats) \n';
     totalAmount += thisAmount;
