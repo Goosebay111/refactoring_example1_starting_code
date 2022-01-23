@@ -1,5 +1,5 @@
-// STEP 6 pg.
-// CHANGE FUNCTION DECLARATION (124)
+// STEP 7 pg. 13
+//
 
 import 'package:intl/intl.dart';
 
@@ -35,11 +35,8 @@ String statement(Invoices invoice, Plays plays) {
     return result;
   }
 
-// CHANGE FUNCTION DECLARATION (124)
-
   int amountFor(Performance aPerformance) {
     int result = 0;
-    // 1a)
     switch (playFor(aPerformance).type) {
       case 'tragedy':
         result = 40000;
@@ -55,14 +52,13 @@ String statement(Invoices invoice, Plays plays) {
         result += 300 * aPerformance.audience;
         break;
       default:
-        // 1b)
         throw 'unknown type: ${playFor(aPerformance).type}';
     }
     return result;
   }
 
   for (Performance perf in invoice.performances) {
-    int thisAmount = amountFor(perf, playFor(perf));
+    int thisAmount = amountFor(perf);
 
     volumeCredits += perf.audience - 30;
     if ('comedy' == playFor(perf).type) {
