@@ -1,5 +1,5 @@
-// STEP 3 pg. 10
-// change the name of argument from perf to aPerformance.
+// STEP 4 pg. 11
+// REMOVING THE PLAY VARIABLE
 
 import 'package:intl/intl.dart';
 
@@ -29,6 +29,14 @@ String statement(Invoices invoice, Plays plays) {
   var result = 'Statement for ${invoice.customer}\n';
   var formatter = NumberFormat.simpleCurrency().format;
 
+  // STEP 4.
+  // 1B) EXTRACT THE RIGHT-HAND SIDE OF ARGUMENT INTO A FUNCTION.
+  Play playFor(Performance aPerformance) {
+    var result =
+        plays.plays.firstWhere((play) => play.name == aPerformance.playID);
+    return result;
+  }
+
   int amountFor(Performance aPerformance, Play play) {
     int result = 0;
     switch (play.type) {
@@ -52,9 +60,8 @@ String statement(Invoices invoice, Plays plays) {
   }
 
   for (Performance perf in invoice.performances) {
-    final play = plays.plays.firstWhere((play) => play.name == perf.playID);
-
-    // 2a) This amount method was directly .
+    //1A) EXTRACT THE RIGHT-HAND SIDE OF ARGUMENT INTO A FUNCTION.
+    final play = playFor(perf);
     int thisAmount = amountFor(perf, play);
 
     // add volume credits
