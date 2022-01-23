@@ -1,7 +1,5 @@
-// STEP 8 pg. 15
-// moved variable,
-// replaced right hand side with method.
-// renamed in function parameter name and input value.
+// STEP 13 pg. 21
+// remove totalAmount variable!
 
 import 'package:intl/intl.dart';
 
@@ -26,11 +24,10 @@ void main() {
 }
 
 String statement(Invoices invoice, Plays plays) {
-  // 1) volumeCredits needs to remain.. for now.
-  var volumeCredits = 0;
-  var totalAmount = 0;
+  //1b)
+  // var totalAmount = 0;
+
   var result = 'Statement for ${invoice.customer}\n';
-  var formatter = NumberFormat.simpleCurrency().format;
 
   Play playFor(Performance aPerformance) {
     var result =
@@ -38,9 +35,7 @@ String statement(Invoices invoice, Plays plays) {
     return result;
   }
 
-// 1a) moved volumeCredits variable here, then moved the right hand side from below to here.
   int volumeCreditsFor(Performance aPerformance) {
-    // added here and then renamed to result in function parameter name and input value.
     var result = 0;
     result += aPerformance.audience - 30;
     if ('comedy' == playFor(aPerformance).type) {
@@ -71,14 +66,39 @@ String statement(Invoices invoice, Plays plays) {
     return result;
   }
 
-  for (Performance perf in invoice.performances) {
-    volumeCredits = volumeCreditsFor(perf);
-    result +=
-        ' ${playFor(perf).name}: ${formatter(amountFor(perf) / 100)} (${perf.audience} seats) \n';
-    totalAmount += amountFor(perf);
+  String usd(aNumber) {
+    var result = (NumberFormat.simpleCurrency().format)(aNumber / 100);
+    return result;
   }
-  result += 'Amount owed is ${formatter(totalAmount / 100)}\n';
-  result += 'You earned $volumeCredits credits\n';
+
+  totalVolumeCredits() {
+    var result = 0;
+    for (Performance perf in invoice.performances) {
+      result += volumeCreditsFor(perf);
+    }
+    return result;
+  }
+
+  // 1A)
+  int totalAmount() {
+    var result = 0;
+    for (Performance perf in invoice.performances) {
+      //1d) removed result to totalAmount.
+      result += amountFor(perf);
+      //1e)
+      //' ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats) \n';
+
+    }
+    return result;
+  }
+
+  for (Performance perf in invoice.performances) {
+    result +=
+        ' ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats) \n';
+  }
+
+  result += 'Amount owed is ${usd(totalAmount())}\n';
+  result += 'You earned ${totalVolumeCredits()} credits\n';
   return result;
 }
 
