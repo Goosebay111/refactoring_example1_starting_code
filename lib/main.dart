@@ -1,32 +1,6 @@
-// STEP 13 pg. 21
-// remove totalAmount variable!
-
 import 'package:intl/intl.dart';
 
-void main() {
-  List<Performance> invoiceList = [
-    Performance(playID: 'Hamlet', audience: 55),
-    Performance(playID: 'As You Like It', audience: 35),
-    Performance(playID: 'Othello', audience: 40),
-  ];
-
-  List<Play> playList = [
-    Play(name: 'Hamlet', type: 'tragedy'),
-    Play(name: 'As You Like It', type: 'comedy'),
-    Play(name: 'Othello', type: 'tragedy'),
-  ];
-
-  Invoices invoices = Invoices(performances: invoiceList);
-
-  Plays plays = Plays(plays: playList);
-
-  print(statement(invoices, plays));
-}
-
 String statement(Invoices invoice, Plays plays) {
-  //1b)
-  // var totalAmount = 0;
-
   var result = 'Statement for ${invoice.customer}\n';
 
   Play playFor(Performance aPerformance) {
@@ -79,15 +53,10 @@ String statement(Invoices invoice, Plays plays) {
     return result;
   }
 
-  // 1A)
   int totalAmount() {
     var result = 0;
     for (Performance perf in invoice.performances) {
-      //1d) removed result to totalAmount.
       result += amountFor(perf);
-      //1e)
-      //' ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats) \n';
-
     }
     return result;
   }
@@ -123,4 +92,24 @@ class Performance {
   Performance({required this.playID, required this.audience});
   String playID;
   int audience;
+}
+
+void main() {
+  List<Performance> invoiceList = [
+    Performance(playID: 'Hamlet', audience: 55),
+    Performance(playID: 'As You Like It', audience: 35),
+    Performance(playID: 'Othello', audience: 40),
+  ];
+
+  List<Play> playList = [
+    Play(name: 'Hamlet', type: 'tragedy'),
+    Play(name: 'As You Like It', type: 'comedy'),
+    Play(name: 'Othello', type: 'tragedy'),
+  ];
+
+  Invoices invoices = Invoices(performances: invoiceList);
+
+  Plays plays = Plays(plays: playList);
+
+  print(statement(invoices, plays));
 }
