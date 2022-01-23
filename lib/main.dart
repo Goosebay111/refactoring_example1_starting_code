@@ -1,3 +1,6 @@
+// STEP 2 pg. 9
+// After Extract Method (106), rename some variables to make them more descriptive.
+
 import 'package:intl/intl.dart';
 
 void main() {
@@ -27,25 +30,26 @@ String statement(Invoices invoice, Plays plays) {
   var formatter = NumberFormat.simpleCurrency().format;
 
   int amountFor(Performance perf, Play play) {
-    int thisAmount = 0;
+    // 1a) change totalAmount to result.
+    int result = 0;
     switch (play.type) {
       case 'tragedy':
-        thisAmount = 40000;
+        result = 40000;
         if (perf.audience > 30) {
-          thisAmount += 1000 * (perf.audience - 30);
+          result += 1000 * (perf.audience - 30);
         }
         break;
       case 'comedy':
-        thisAmount = 30000;
+        result = 30000;
         if (perf.audience > 20) {
-          thisAmount += 10000 + 500 * (perf.audience - 20);
+          result += 10000 + 500 * (perf.audience - 20);
         }
-        thisAmount += 300 * perf.audience;
+        result += 300 * perf.audience;
         break;
       default:
         throw 'unknown type: ${play.type}';
     }
-    return thisAmount;
+    return result;
   }
 
   for (Performance perf in invoice.performances) {
