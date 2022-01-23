@@ -1,5 +1,7 @@
 // STEP 8 pg. 15
-//
+// moved variable,
+// replaced right hand side with method.
+// renamed in function parameter name and input value.
 
 import 'package:intl/intl.dart';
 
@@ -24,14 +26,26 @@ void main() {
 }
 
 String statement(Invoices invoice, Plays plays) {
-  var totalAmount = 0;
+  // 1) volumeCredits needs to remain.. for now.
   var volumeCredits = 0;
+  var totalAmount = 0;
   var result = 'Statement for ${invoice.customer}\n';
   var formatter = NumberFormat.simpleCurrency().format;
 
   Play playFor(Performance aPerformance) {
     var result =
         plays.plays.firstWhere((play) => play.name == aPerformance.playID);
+    return result;
+  }
+
+// 1a) moved volumeCredits variable here, then moved the right hand side from below to here.
+  int volumeCreditsFor(Performance aPerformance) {
+    // added here and then renamed to result in function parameter name and input value.
+    var result = 0;
+    result += aPerformance.audience - 30;
+    if ('comedy' == playFor(aPerformance).type) {
+      result += (aPerformance.audience / 5).floor();
+    }
     return result;
   }
 
@@ -58,10 +72,7 @@ String statement(Invoices invoice, Plays plays) {
   }
 
   for (Performance perf in invoice.performances) {
-    volumeCredits += perf.audience - 30;
-    if ('comedy' == playFor(perf).type) {
-      volumeCredits += (perf.audience / 5).floor();
-    }
+    volumeCredits = volumeCreditsFor(perf);
     result +=
         ' ${playFor(perf).name}: ${formatter(amountFor(perf) / 100)} (${perf.audience} seats) \n';
     totalAmount += amountFor(perf);
