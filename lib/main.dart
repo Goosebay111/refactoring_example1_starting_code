@@ -1,4 +1,4 @@
-// STEP 7 pg. 13
+// STEP 8 pg. 15
 //
 
 import 'package:intl/intl.dart';
@@ -58,15 +58,13 @@ String statement(Invoices invoice, Plays plays) {
   }
 
   for (Performance perf in invoice.performances) {
-    int thisAmount = amountFor(perf);
-
     volumeCredits += perf.audience - 30;
     if ('comedy' == playFor(perf).type) {
       volumeCredits += (perf.audience / 5).floor();
     }
     result +=
-        ' ${playFor(perf).name}: ${formatter(thisAmount / 100)} (${perf.audience} seats) \n';
-    totalAmount += thisAmount;
+        ' ${playFor(perf).name}: ${formatter(amountFor(perf) / 100)} (${perf.audience} seats) \n';
+    totalAmount += amountFor(perf);
   }
   result += 'Amount owed is ${formatter(totalAmount / 100)}\n';
   result += 'You earned $volumeCredits credits\n';
