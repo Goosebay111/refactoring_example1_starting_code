@@ -35,9 +35,12 @@ String statement(Invoices invoice, Plays plays) {
     return result;
   }
 
-  int amountFor(Performance aPerformance, Play play) {
+// CHANGE FUNCTION DECLARATION (124)
+
+  int amountFor(Performance aPerformance) {
     int result = 0;
-    switch (play.type) {
+    // 1a)
+    switch (playFor(aPerformance).type) {
       case 'tragedy':
         result = 40000;
         if (aPerformance.audience > 30) {
@@ -52,7 +55,8 @@ String statement(Invoices invoice, Plays plays) {
         result += 300 * aPerformance.audience;
         break;
       default:
-        throw 'unknown type: ${play.type}';
+        // 1b)
+        throw 'unknown type: ${playFor(aPerformance).type}';
     }
     return result;
   }
