@@ -1,5 +1,5 @@
-// STEP 4 pg. 11
-// REMOVING THE PLAY VARIABLE
+// STEP 5 pg. 11-12
+// Inline Variable (123)
 
 import 'package:intl/intl.dart';
 
@@ -29,8 +29,6 @@ String statement(Invoices invoice, Plays plays) {
   var result = 'Statement for ${invoice.customer}\n';
   var formatter = NumberFormat.simpleCurrency().format;
 
-  // STEP 4.
-  // 1B) EXTRACT THE RIGHT-HAND SIDE OF ARGUMENT INTO A FUNCTION.
   Play playFor(Performance aPerformance) {
     var result =
         plays.plays.firstWhere((play) => play.name == aPerformance.playID);
@@ -60,19 +58,19 @@ String statement(Invoices invoice, Plays plays) {
   }
 
   for (Performance perf in invoice.performances) {
-    //1A) EXTRACT THE RIGHT-HAND SIDE OF ARGUMENT INTO A FUNCTION.
-    final play = playFor(perf);
-    int thisAmount = amountFor(perf, play);
+    // STEP 5
+    // 1A) moved play variable into the thisAmount variable.
+    // final play = playFor(perf);
+    int thisAmount = amountFor(perf, playFor(perf));
 
-    // add volume credits
     volumeCredits += perf.audience - 30;
-    // add extra credit for every ten comedy attendees
-    if ('comedy' == play.type) {
+    // 1b)
+    if ('comedy' == playFor(perf)) {
       volumeCredits += (perf.audience / 5).floor();
     }
-    // print line for this order
+    // 1c)
     result +=
-        ' ${play.name}: ${formatter(thisAmount / 100)} (${perf.audience} seats) \n';
+        ' ${playFor(perf).name}: ${formatter(thisAmount / 100)} (${perf.audience} seats) \n';
     totalAmount += thisAmount;
   }
   result += 'Amount owed is ${formatter(totalAmount / 100)}\n';
